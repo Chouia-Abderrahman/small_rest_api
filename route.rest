@@ -1,0 +1,32 @@
+GET http://localhost:3000/employees
+
+
+############
+POST http://localhost:3000/employees
+Content-Type: application/json
+
+{
+  "id": "2000",
+  "lastName": "new",
+  "firstName": "sssss",
+  "dateCreated": "2023-10-31",
+  "department": "hr"
+}
+
+#####
+put http://localhost:3000/check-in
+Content-Type: application/json
+
+{
+  "employeeId": "654032e25a69731c7ef4e661",
+  "comment": "commentssss"
+}
+
+####
+
+put http://localhost:3000/check-out
+Content-Type: application/json
+
+{
+  "employeeId": "654009cff21fb99c8d367290"
+}
