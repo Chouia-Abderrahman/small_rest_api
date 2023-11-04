@@ -50,10 +50,10 @@ app.post('/employees', async (req, res) => {
         return res.status(404).json({ error: 'Employee not found' });
       }
 
-      employee.checkIns(new Date());
+      employee.checkIns = new Date();
   
       if (comment) {
-        employee.comments(comment);
+        employee.comments = comment;
       }
   
       await employee.save();
@@ -76,24 +76,43 @@ app.post('/employees', async (req, res) => {
       }
 
 
+
+
+
+
       
   
       const checkInTime = employee.checkIns;
       const checkOutTime = new Date();
       const timeDifference = checkOutTime - checkInTime;
   
-      employee.checkOuts = new Date();
+      employee.checkOuts = checkOutTime;
       employee.timeDifference = timeDifference;
 
       //employee.checkOuts(new Date());
   
       if (comment) {
-        employee.comments(comment);
+        employee.comments=comment;
       }
   
       await employee.save();
   
       res.status(201).json(employee);
+    } catch (err) {
+      res.status(500).json({ error: err.message });
+    }
+  });
+
+  app.delete('/delete-all', async (req, res) => {
+    try {
+      // Use the deleteMany method with an empty filter to delete all documents
+      const result = await Employee.deleteMany({});
+  
+      if (result.deletedCount === 0) {
+        return res.status(404).json({ message: 'No records found to delete' });
+      }
+  
+      res.status(200).json({ message: 'All records deleted', deletedCount: result.deletedCount });
     } catch (err) {
       res.status(500).json({ error: err.message });
     }

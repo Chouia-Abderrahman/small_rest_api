@@ -16,7 +16,6 @@ db.once('open', () => {
 
 const employeeSchema = new mongoose.Schema({
   id: String,
-  thing:String,
   lastName: String,
   firstName: String,
   dateCreated: Date,

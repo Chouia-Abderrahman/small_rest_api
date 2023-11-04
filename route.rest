@@ -1,4 +1,6 @@
 GET http://localhost:3000/employees
+######
+DELETE http://localhost:3000/delete-all
 
 
 ############
@@ -6,11 +8,11 @@ POST http://localhost:3000/employees
 Content-Type: application/json
 
 {
-  "id": "2000",
-  "lastName": "new",
-  "firstName": "sssss",
+  "id": "12345",
+  "lastName": "jack",
+  "firstName": "smith",
   "dateCreated": "2023-10-31",
-  "department": "hr"
+  "department": "informatique"
 }
 
 #####
@@ -18,7 +20,7 @@ put http://localhost:3000/check-in
 Content-Type: application/json
 
 {
-  "employeeId": "654032e25a69731c7ef4e661",
+  "employeeId": "65451cf98fddc2598bbd174e",
   "comment": "commentssss"
 }
 
@@ -28,5 +30,5 @@ put http://localhost:3000/check-out
 Content-Type: application/json
 
 {
-  "employeeId": "654009cff21fb99c8d367290"
+  "employeeId": "65451cf98fddc2598bbd174e"
 }
