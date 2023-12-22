@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
-const dbURI = 'mongodb://localhost/biometric-time-clock';
+const dbURI = 'mongodb://mongo:27017/biometric-time-clock';
+//mongoose.connect('your-database-name', { useNewUrlParser: true, useUnifiedTopology: true });
 
 mongoose.connect(dbURI, {
   useNewUrlParser: true,

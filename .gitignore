@@ -1,0 +1,24 @@
+# Node.js
+node_modules/
+
+# Logs
+logs
+*.log
+
+# Dependency directories
+.pnpm
+.npm
+yarn-error.log
+yarn.lock
+
+# dotenv environment variables file
+.env
+
+# macOS
+.DS_Store
+
+# Visual Studio Code
+.vscode/
+
+# Windows
+Thumbs.db
