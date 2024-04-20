@@ -1,42 +1,28 @@
-// const mongoose = require('mongoose');
+const { DataTypes } = require('sequelize');
+const sequelize = require('../config/db_config');
 
-// const dbURI = 'mongodb://mongo:27017/biometric-time-clock';
-// //mongoose.connect('your-database-name', { useNewUrlParser: true, useUnifiedTopology: true });
-
-// mongoose.connect(dbURI, {
-//   useNewUrlParser: true,
-//   useUnifiedTopology: true,
-// });
-
-// const db = mongoose.connection;
-
-// db.on('error', console.error.bind(console, 'MongoDB connection error:'));
-// db.once('open', () => {
-//   console.log('Connected to MongoDB');
-// });
-
-// const employeeSchema = new mongoose.Schema({
-//   id: String,
-//   lastName: String,
-//   firstName: String,
-//   dateCreated: Date,
-//   department: String,
-//   checkIns: Date,
-//   checkOuts: Date,
-//   timeDifference: Number,
-//   comments: String,
-// });
-
-// module.exports = mongoose.model('Employee', employeeSchema);
-// console.log('ran');
-//////////////////////////////// postgres connection
-const { Client } = require('pg');
-
-const client = new Client({
-	user: 'node',
-	password: 'node',
-	host: 'localhost',
-	port: '5432',
-	database: 'node_db',
+const Employee = sequelize.define('Employee', {
+    id: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        primaryKey: true
+    },
+    lastName: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    firstName: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    dateCreated: {
+        type: DataTypes.DATE,
+        allowNull: false
+    },
+    department: {
+        type: DataTypes.STRING,
+        allowNull: false
+    }
 });
-console.log('pg connection sucess');
+
+module.exports = Employee;
