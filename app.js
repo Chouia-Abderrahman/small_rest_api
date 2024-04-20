@@ -6,38 +6,43 @@ const Employee = require('./models/employee'); // Import the Employee model
 
 app.use(express.json());
 
-// // create new employee
-// app.post('/employees', async (req, res) => {
-//   try {
-//     const { id, lastName, firstName, dateCreated, department } = req.body;
-//     const employee = new Employee({ 
-//         id, 
-//         lastName,
-//         firstName,
-//         dateCreated,
-//         department,
-//          });
-//     await employee.save();
-//     res.status(201).json(employee);
-//   } catch (err) {
-//     res.status(500).json({ error: err.message });
-//   }
-// });
-//  // get all employees or employees created in a certain date
+app.post('/employees', async (req, res) => {
+    try {
+        const { id, lastName, firstName, dateCreated, department } = req.body;
+        
+        const employee = await Employee.create({
+            id,
+            lastName,
+            firstName,
+            dateCreated,
+            department
+        });
+        res.status(201).json({ message: 'Employee created successfully', employee });
+    } catch (error) {
+        console.error('Error creating employee:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+ // get all employees or employees created in a certain date
 
-//   app.get('/employees', async (req, res) => {
-//     try {
-//       const { dateCreated } = req.query;
-  
-//       const query = dateCreated ? { dateCreated } : {};
-  
-//       const employees = await Employee.find(query);
-  
-//       res.json(employees);
-//     } catch (err) {
-//       res.status(500).json({ error: err.message });
-//     }
-//   });
+  // Route to get employees
+  app.get('/employees', async (req, res) => {
+    const { date } = req.query; // Get the value of the 'date' query parameter
+    try {
+        let employees;
+        if (date) {
+            employees = await Employee.findAll({
+                where: sequelize.where(sequelize.fn('DATE', sequelize.col('createdAt')), '=', new Date(date))
+            });
+        } else {
+            employees = await Employee.findAll();
+        }
+        res.status(200).json(employees);
+    } catch (error) {
+        console.error('Error fetching employees:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
 // // adding a checkin time for existing employee using id and a comment as well
 
 //   app.put('/check-in', async (req, res) => {
@@ -127,7 +132,7 @@ async function initializeDatabase() {
         console.log('Connection to database has been established successfully.');
 
         // Sync the model with the database
-        await employee.sync({ force: true }); // Use force: true to drop the table if it already exists
+        await employee.sync({ force: false }); // Use force: true to drop the table if it already exists
         console.log('All models were synchronized successfully.');
     } catch (error) {
         console.error('Unable to connect to the database:', error);

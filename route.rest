@@ -8,11 +8,10 @@ POST http://localhost:3000/employees
 Content-Type: application/json
 
 {
-  "id": "12345",
-  "lastName": "jack",
-  "firstName": "smith",
-  "dateCreated": "2023-10-31",
-  "department": "informatique"
+  "id": "fgdsfgsdsdffdf",
+  "lastName": "johnjohnjohnjohn",
+  "firstName": "johnjohnjohnjohn",
+  "department": "ijohnjohnjohnnfo"
 }
 
 #####

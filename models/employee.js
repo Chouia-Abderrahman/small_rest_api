@@ -15,10 +15,6 @@ const Employee = sequelize.define('Employee', {
         type: DataTypes.STRING,
         allowNull: false
     },
-    dateCreated: {
-        type: DataTypes.DATE,
-        allowNull: false
-    },
     department: {
         type: DataTypes.STRING,
         allowNull: false
