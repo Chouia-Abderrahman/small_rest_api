@@ -33,15 +33,67 @@ app.post('/employees', async (req, res) => {
     try {
         let employees;
         if (date) {
-            employees = await Employee.findAll({
+            employees = await employee.findAll({
                 where: sequelize.where(sequelize.fn('DATE', sequelize.col('createdAt')), '=', new Date(date))
             });
         } else {
-            employees = await Employee.findAll();
+            employees = await employee.findAll();
         }
         res.status(200).json(employees);
     } catch (error) {
         console.error('Error fetching employees:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
+// Route to handle check-in
+app.post('/check-in', async (req, res) => {
+    const { employeeId, comment } = req.body;
+    try {
+        // Find the employee by employeeId
+        const emp = await employee.findByPk(employeeId);
+        if (!emp) {
+            return res.status(404).json({ error: 'Employee not found' });
+        }
+
+        // Perform check-in
+        await check.create({
+            employee_id: employeeId,
+            checkin: new Date(),
+            comment: comment
+        });
+
+        res.status(201).json({ message: 'Check-in successful' });
+    } catch (error) {
+        console.error('Error performing check-in:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
+// Route to handle check-out
+app.post('/check-out', async (req, res) => {
+    const { employeeId, comment } = req.body;
+    try {
+        // Find the employee by employeeId
+        const emp = await employee.findByPk(employeeId);
+        if (!emp) {
+            return res.status(404).json({ error: 'Employee not found' });
+        }
+
+        // Perform check-out
+        await check.update({
+            checkout: new Date(),
+            comment: comment
+        }, {
+            where: {
+                employee_id: employeeId,
+                checkout: null // Only update if checkout is null (not already checked out)
+            }
+        });
+
+        res.status(200).json({ message: 'Check-out successful' });
+    } catch (error) {
+        console.error('Error performing check-out:', error);
         res.status(500).json({ error: 'Internal server error' });
     }
 });

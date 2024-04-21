@@ -8,26 +8,26 @@ POST http://localhost:3000/employees
 Content-Type: application/json
 
 {
-  "id": "fgdsfgsdsdffdf",
+  "id": "1",
   "lastName": "johnjohnjohnjohn",
   "firstName": "johnjohnjohnjohn",
   "department": "ijohnjohnjohnnfo"
 }
 
 #####
-put http://localhost:3000/check-in
+post http://localhost:3000/check-in
 Content-Type: application/json
 
 {
-  "employeeId": "65451cf98fddc2598bbd174e",
+  "employeeId": "dds",
   "comment": "commentssss"
 }
 
 ####
 
-put http://localhost:3000/check-out
+post http://localhost:3000/check-out
 Content-Type: application/json
 
 {
-  "employeeId": "65451cf98fddc2598bbd174e"
+  "employeeId": "dds"
 }
