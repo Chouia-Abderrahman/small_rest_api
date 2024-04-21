@@ -1,8 +1,10 @@
 const express = require('express');
 const app = express();
-const port = 3000; 
+const port = 3000;
 
-const Employee = require('./models/employee'); // Import the Employee model
+const sequelize = require('./config/db_config');
+const employee = require('./models/employee');
+const check = require('./models/checks');
 
 app.use(express.json());
 
@@ -123,8 +125,6 @@ app.post('/employees', async (req, res) => {
 //     }
 //   });
 
-const sequelize = require('./config/db_config');
-const employee = require('./models/employee');
 
 async function initializeDatabase() {
     try {
@@ -132,7 +132,8 @@ async function initializeDatabase() {
         console.log('Connection to database has been established successfully.');
 
         // Sync the model with the database
-        await employee.sync({ force: false }); // Use force: true to drop the table if it already exists
+        await employee.sync({ force: false }); 
+        await check.sync({ force: false });
         console.log('All models were synchronized successfully.');
     } catch (error) {
         console.error('Unable to connect to the database:', error);
